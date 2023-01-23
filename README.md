@@ -41,6 +41,7 @@
 [medium 1](https://medium.com/tech-it-out/introduction-to-nginx-101-20b52e316f8/) ✨<br>
 [medium 2](https://ashanpriyadarshana.medium.com/nginx-101-4687b28ae633) ✨<br>
 [SSL & TLS](https://www.websecurity.digicert.com/security-topics/what-is-ssl-tls-https)<br>
+
 > SSL how it works ?<br>
 ![alt text for screen readers](https://docs.oracle.com/cd/E19226-01/820-7627/images/security-sslBMAWithCertificates.gif).<br>
 
