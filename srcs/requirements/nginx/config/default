@@ -1,0 +1,29 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    default                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: obelkhad <obelkhad@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/01/21 14:35:08 by obelkhad          #+#    #+#              #
+#    Updated: 2023/01/21 20:49:54 by obelkhad         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+server {
+
+    listen 443 ssl;
+	listen [::]:443 ssl ;
+    server_name obelkhad.42.fr;
+    ssl_certificate                 /etc/nginx/obelkhad.crt;
+    ssl_certificate_key             /etc/nginx/obelkhad.key;
+    ssl_protocols                  TLSv1.3;
+	
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    # location / {
+    #     try_files $uri $uri/ =404;
+    # }
+}
