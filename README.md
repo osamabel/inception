@@ -4,14 +4,21 @@
 
 >---
 > sources :
- [docs](https://docs.docker.com/)
- [docker 101](https://www.docker.com/101-tutorial/)
- [Docker Tutorial Series](https://rominirani.com/docker-tutorial-series-a7e6ff90a023)
- [Why Docker?](https://itnext.io/docker-101-fundamentals-the-dockerfile-b33b59d0f14b#:~:text=point%3A%20why%20Docker%3F-,Why%20Docker%3F,-I%20can%E2%80%99t%20tell)
- [medium](https://medium.com/free-code-camp/demystifying-containers-101-a-deep-dive-into-container-technology-for-beginners-d7b60d8511c1)
- [Kernel Space - PARTE I](https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504)
- [Container Runtimes - PARTE II](https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25)
- [Container Images - PARTE III](https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef)
+> 
+[docs](https://docs.docker.com/)
+ 
+[docker 101](https://www.docker.com/101-tutorial/)
+[Docker Tutorial Series](https://rominirani.com/docker-tutorial-series-a7e6ff90a023)
+
+[Why Docker?](https://itnext.io/docker-101-fundamentals-the-dockerfile-b33b59d0f14b#:~:text=point%3A%20why%20Docker%3F-,Why%20Docker%3F,-I%20can%E2%80%99t%20tell)
+
+[medium](https://medium.com/free-code-camp/demystifying-containers-101-a-deep-dive-into-container-technology-for-beginners-d7b60d8511c1)
+
+[Kernel Space - PARTE I](https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504)
+
+[Container Runtimes - PARTE II](https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25)
+
+[Container Images - PARTE III](https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef)
 
 
 >---
