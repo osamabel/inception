@@ -1,4 +1,3 @@
-https://discord.com/channels/788078738905628682/788080261962661949/1065399286419968070
 
 ## _Docker 101_
 > Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies
