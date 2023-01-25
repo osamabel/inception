@@ -50,5 +50,28 @@ TLS/SSL works by using a combination of a `public certificate` and a `private ke
 The `SSL key` is kept secret on the server: It is used to encrypt content sent to clients.<br>
 `The SSL certificate` is publicly shared with anyone requesting the content :It can be used to decrypt the content signed by the associated SSL key.<br>
 
+## _Wordpress :_
+To run WordPress we recommend your host supports :
+- [PHP](https://www.php.net/) version 7.4 or greater, [How to setup PHP on Nginx with fastCGI](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Nginx-PHP-FPM-config-example) & [PHP extentions](https://docs.php.earth/docker/php-extensions/). <br>
+- [How to install PHP extensions on Linux](https://www.linkedin.com/pulse/how-install-php-extensions-linux-vladimir-lebedenko/)
+- [Why Do You Need PHP FastCGI Process Manager?](https://www.plesk.com/blog/various/why-do-you-need-php-fpm/).<br>
+
+> There are many `PHP extensions` available, some of the most common ones used in combination with nginx and mariadb are:
+**PHP-FPM** :(an acronym of FastCGI Process Manager) is a hugely-popular alternative PHP (Hypertext Processor) FastCGI implementation.
+-**MySQLi**: This extension provides an improved interface for working with MySQL databases.<br>
+-**PDO**: PHP Data Objects is a database access abstraction layer that provides a unified API for working with different types of databases, including MariaDB.<br>
+-**mbstring**: This extension provides multibyte string functions, which can be useful for processing text in languages that use non-Latin characters.<br>
+-**curl**: This extension allows PHP to communicate with other servers using the cURL library, which is often used to transfer data over HTTP.<br>
+-**json**: This extension provides functions for encoding and decoding JSON data, which is often used for exchanging data between web applications.<br>
+-**gd**: This extension provides image processing capabilities, such as creating, opening, manipulating and saving image files.<br>
+-**zip**: This extension provides support for handling ZIP compressed files.<br>
+-**xml**: This extension provides functions for parsing and manipulating XML data.<br>
+
+- [MySQL](https://www.mysql.com/) version 5.7 or greater OR [MariaDB](https://mariadb.org/) version 10.3 or greater. <br>
+- [HTTPS](https://wordpress.org/news/2016/12/moving-toward-ssl/) support. <br>
+- [Apache](https://httpd.apache.org/) or [Nginx](https://nginx.org/) as the most robust and featureful server for running WordPress. <br>
+- `any server that supports PHP and MySQL will do`
+>[How to install WordPress](https://wordpress.org/documentation/article/how-to-install-wordpress/)
+
 
 
