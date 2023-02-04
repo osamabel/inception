@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: obelkhad <obelkhad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/30 13:56:31 by obelkhad          #+#    #+#              #
-#    Updated: 2023/01/30 13:56:32 by obelkhad         ###   ########.fr        #
+#    Created: 2023/01/27 10:55:55 by obelkhad          #+#    #+#              #
+#    Updated: 2023/02/01 09:18:36 by obelkhad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,24 +15,21 @@
 FROM debian:buster
 RUN apt-get update
 
-# ------------------------------- Istall NGINX ------------------------------- #
-RUN apt-get install nginx -y
+# ---------------------------- PHP & PHP Extention --------------------------- #
+RUN apt-get -y install php7.3 php7.3-fpm php7.3-mysqli
 
-# -------------------------------- install SSL ------------------------------- #
-RUN apt-get install openssl 
-
-# ------------------------ Create the SSL Certificate ------------------------- #
-RUN openssl req -x509 -newkey rsa:2048 -days 365 -nodes\
-    -out /etc/nginx/obelkhad.crt\
-	-keyout /etc/nginx/obelkhad.key\
-	-subj '/C=MA/ST=CASA/L=CASA/O=1337 School/OU=obelkhad/CN=obelkahd/'
-
-# --------------------------- Server Configuration ---------------------------- #
-COPY ./config/default /etc/nginx/sites-enabled/default
+# -------------------------------- PHP CONFIG -------------------------------- #
+COPY ./tools/* /tmp
+RUN chmod +x /tmp/wordpress.sh
+RUN mkdir /run/php
+RUN chown -R www-data:www-data /run/php
+COPY ./config/www.conf /etc/php/7.3/fpm/pool.d/
 
 # ----------------------------------- PORTS ---------------------------------- #
-EXPOSE 443
+EXPOSE 9000
 
-# -------------------------------- ENTRYPOINT -------------------------------- #
-ENTRYPOINT ["nginx", "-g", "daemon off;"] 
+# ------------------------------- Wordpress cli ------------------------------ #
+RUN apt-get -y install wget
+
+ENTRYPOINT [ "/tmp/wordpress.sh" ]
 

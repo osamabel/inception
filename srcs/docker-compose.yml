@@ -1,6 +1,59 @@
-version: '3'
+version: '3.7'
 services:
-  nginx:
-    build: requirements/nginx/
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build: ./requirements/mariadb/
+    restart: always
     ports:
-      - "443:443"
+      - 3306:3306
+    volumes:
+      - mariavlm:/var/lib/mysql/
+    networks:
+      - inception_net
+    env_file:
+      - .env
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx/
+    image: nginx
+    volumes:
+      - wordpressvlm:/var/www/html
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress
+    networks:
+      - inception_net
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    build: ./requirements/wordpress/
+    volumes:
+      - wordpressvlm:/var/www/html
+    ports:
+      - 9000:9000
+    depends_on:
+      - mariadb
+    networks:
+      - inception_net
+    env_file:
+      - .env
+networks:
+    inception_net:
+        driver: bridge
+volumes:
+    wordpressvlm:
+        driver: local
+        driver_opts:
+            device: /home/obelkhad/volume/wordpress
+            type : none
+            o: bind
+    mariavlm:
+        driver: local
+        driver_opts:
+            device: /home/obelkhad/volume/maria
+            type: none
+            o: bind
+
+            
