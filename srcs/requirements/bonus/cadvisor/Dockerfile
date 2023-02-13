@@ -5,41 +5,30 @@
 #                                                     +:+ +:+         +:+      #
 #    By: obelkhad <obelkhad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/28 08:49:47 by obelkhad          #+#    #+#              #
-#    Updated: 2023/02/11 21:49:50 by obelkhad         ###   ########.fr        #
+#    Created: 2023/02/08 06:11:13 by obelkhad          #+#    #+#              #
+#    Updated: 2023/02/11 22:07:44 by obelkhad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
+# https://www.metricfire.com/blog/monitoring-docker-containers-with-cadvisor/
 # -------------------------------- Base Image -------------------------------- #
 FROM debian:buster
 RUN apt-get update
 
 
-# ----------------------------------- ARGS ----------------------------------- #
-ARG DATA_NAME
-ARG USER_NAME
-ARG USER_PASSWORD
-ARG ROOT_PASSWORD
+# ----------------------------------- CURL ----------------------------------- #
+RUN apt install -y wget
 
-
-# ---------------------------------- MariaDB --------------------------------- #
-RUN apt-get install -y mariadb-server
-
-
-# ---------------------------------- CONFIG ---------------------------------- #
-RUN sed -i 's/bind-address.*=.*127.0.0.1/bind-address = 0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/mariadb.sh /tmp/
-RUN chmod +x /tmp/mariadb.sh
+# ----------------------------- DOWNLOAD CADVISOR ---------------------------- #
+RUN wget https://github.com/google/cadvisor/releases/download/v0.47.0/cadvisor-v0.47.0-linux-amd64
+RUN mv cadvisor-v0.47.0-linux-amd64 cadvisor
+RUN chmod +x cadvisor
+RUN mv cadvisor /usr/bin/
 
 
 # ----------------------------------- PORT ----------------------------------- #
-EXPOSE 3306
-
-
-# ---------------------------------- SCRIPT ---------------------------------- #
-RUN /tmp/mariadb.sh
+EXPOSE 8181
 
 
 # -------------------------------- foreground -------------------------------- #
-CMD ["mysqld"]
+ENTRYPOINT ["/usr/bin/cadvisor", "-logtostderr", "--port=8181"]

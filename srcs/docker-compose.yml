@@ -1,10 +1,16 @@
-version: '3.7'
+version: '3.9'
 services:
   mariadb:
     container_name: mariadb
     image: mariadb
-    build: ./requirements/mariadb/
-    restart: always
+    build:
+      context: ./requirements/mariadb/
+      args:
+        DATA_NAME: ${DATA_NAME}
+        USER_NAME: ${USER_NAME}
+        USER_PASSWORD: ${USER_PASSWORD}
+        ROOT_PASSWORD: ${ROOT_PASSWORD}
+    restart: on-failure
     ports:
       - 3306:3306
     volumes:
@@ -13,10 +19,12 @@ services:
       - inception_net
     env_file:
       - .env
+
   nginx:
     container_name: nginx
     build: ./requirements/nginx/
     image: nginx
+    restart: on-failure
     volumes:
       - wordpressvlm:/var/www/html
     ports:
@@ -25,6 +33,7 @@ services:
       - wordpress
     networks:
       - inception_net
+
   wordpress:
     container_name: wordpress
     image: wordpress
@@ -39,6 +48,77 @@ services:
       - inception_net
     env_file:
       - .env
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    build: ./requirements/bonus/adminer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mariadb
+    restart: on-failure
+    networks:
+      - inception_net
+
+  ftp:
+    container_name: ftp
+    build: ./requirements/bonus/ftp
+    image: ftp
+    depends_on:
+      - wordpress
+    ports:
+      - '21:21'
+      - 40000-40050:40000-40050
+    volumes:
+      - wordpressvlm:/home/${FTP_USER_NAME}/ftp
+    networks:
+      - inception_net
+    env_file:
+      - .env
+
+
+  portainer:
+    container_name: portainer
+    build: requirements/bonus/portainer/
+    image: portainer
+    ports:
+      - "9443:9443"
+      - "8000:8000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainervlm:/data
+    restart: always
+
+  # cadvisor:
+  #   container_name: cadvisor
+  #   build: requirements/bonus/cadvisor/
+  #   privileged: true
+  #   image: cadvisor
+  #   restart: on-failure
+  #   ports:
+  #     - 8181:8181
+  #   networks:
+  #     - inception_netadminervlm 
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #     - /var/run:/var/run:ro
+  #     - /dev/disk/:/dev/disk:ro
+
+  redis:
+    container_name: redis
+    build: requirements/bonus/redis/
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - inception_net
+    restart: always
+
+
 networks:
     inception_net:
         driver: bridge
@@ -53,6 +133,12 @@ volumes:
         driver: local
         driver_opts:
             device: /home/obelkhad/volume/maria
+            type: none
+            o: bind
+    portainervlm:
+        driver: local
+        driver_opts:
+            device: /home/obelkhad/volume/portainer
             type: none
             o: bind
 

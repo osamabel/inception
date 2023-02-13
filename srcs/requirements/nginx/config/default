@@ -6,10 +6,9 @@
 #    By: obelkhad <obelkhad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/27 10:56:17 by obelkhad          #+#    #+#              #
-#    Updated: 2023/01/30 13:58:38 by obelkhad         ###   ########.fr        #
+#    Updated: 2023/02/11 22:02:51 by obelkhad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 server {
     listen 443 ssl;
@@ -17,9 +16,9 @@ server {
     server_name obelkhad.42.fr;
     ssl_certificate                 /etc/nginx/obelkhad.crt;
     ssl_certificate_key             /etc/nginx/obelkhad.key;
-    ssl_protocols                  TLSv1.2 TLSv1.3;
+    ssl_protocols                  TLSv1.3;
 	
-    root /var/www/html;
+    root /var/www/html/;
     index index.php index.html index.htm index.nginx-debian.html;
   
 	location / {
@@ -27,15 +26,14 @@ server {
 		try_files $uri $uri/ /index.php$is_args$args;
 	}
 	
-	location ~* \.php {
-		try_files $uri =404;
+	location ~ \.php$ {
+		try_files $uri = 404;
 		fastcgi_pass wordpress:9000;
 		fastcgi_index index.php;
-		fastcgi_split_path_info ^(.+\.php)(/.*)$;
 		include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(/.*)$;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param REQUEST_METHOD $request_method;
 		fastcgi_param PATH_INFO $fastcgi_path_info;
 	}
 }
-
-
